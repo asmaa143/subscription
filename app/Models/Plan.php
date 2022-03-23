@@ -8,5 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Plan extends Model
 {
     use HasFactory;
-    protected $fillable=['name','price','stripe_plan_id'];
+    protected $fillable=['name','price','stripe_plan_id','billing_period'];
+
+     function price() {
+        return number_format($this->price / 100, 2);
+    }
 }

@@ -17,6 +17,7 @@ class CreatePlansTable extends Migration
             $table->id();
             $table->string('name');
             $table->integer('price');
+            $table->string('billing_period')->default('monthly');
             $table->string('stripe_plan_id');
             $table->timestamps();
         });

@@ -18,9 +18,34 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        /**
+        * The CSS shown here will not be introduced in the Quickstart guide, but shows
+        * how you can use CSS to style your Element's container.
+        */
+        .StripeElement {
+            box-sizing: border-box;
+            height: 40px;
+            padding: 10px 12px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            background-color: white;
+            box-shadow: 0 1px 3px 0 #e6ebf1;
+            -webkit-transition: box-shadow 150ms ease;
+            transition: box-shadow 150ms ease;
+        }
+        .StripeElement--focus {
+            box-shadow: 0 1px 3px 0 #cfd7df;
+        }
+        .StripeElement--invalid {
+            border-color: #fa755a;
+        }
+        .StripeElement--webkit-autofill {
+            background-color: #fefde5 !important;}
+    </style>
 </head>
 <body>
-    <div id="app">
+    <div>
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -64,9 +89,20 @@
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
-                                    <a  class="dropdown-item" href="{{route('billing')}}" role="button" >
-                                        Billing
+                                    @if(!auth()->user()->subscribed('cashier'))
+                                    <a  class="dropdown-item" href="{{route('subscribe')}}" role="button" >
+                                        Subscribe
                                     </a>
+                                    @endif
+                                    @if(auth()->user()->subscribed('cashier'))
+                                    <a  class="dropdown-item" href="{{route('members')}}" role="button" >
+                                        Members
+                                    </a>
+                                    @endif
+
+                                        <a  class="dropdown-item" href="{{route('charge')}}" role="button" >
+                                            Charge
+                                        </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
@@ -83,5 +119,6 @@
             @yield('content')
         </main>
     </div>
+@yield('scripts')
 </body>
 </html>
